@@ -3,9 +3,10 @@ import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody
 import { Select, MenuItem } from "@material-ui/core";
 
 const options = [
-  { label: "ALLBANKS", value: "ALLBANKS" },
   { label: "MAINIDX", value: "MAINIDX" },
-  { label: "FINANCIAL", value: "FINANCIAL" }
+  { label: "FINANCIALS", value: "FINANCIALS" },
+  { label: "ALLBANKS", value: "ALLBANKS" },
+  { label: "MIDCAPS", value: "MIDCAPS" }
 ];
 
 const MarketData = (props) => {
@@ -19,10 +20,17 @@ const MarketData = (props) => {
     if (option.value === "MAINIDX") {
       const filtered = values.filter((row) => row.tradingSymbol.includes("MAINIDX"));
       setFilteredData(filtered);
-    } else if (option.value === "ALLBANKS") {
-      setFilteredData([]);
-    } else {
-      const filtered = values.filter((row) => row.tradingSymbol.includes("FINANCIAL"));
+    }
+    else if (option.value === "ALLBANKS") {
+      const filtered = values.filter((row) => row.tradingSymbol.includes("ALLBANKS"));
+      setFilteredData(filtered);
+    }
+    else if (option.value === "MIDCAPS") {
+      const filtered = values.filter((row) => row.tradingSymbol.includes("MIDCAPS"));
+      setFilteredData(filtered);
+    }
+    else {
+      const filtered = values.filter((row) => row.tradingSymbol.includes("FINANCIALs"));
       setFilteredData(filtered);
     }
   };
@@ -103,36 +111,42 @@ const MarketData = (props) => {
           </MenuItem>
         ))}
       </Select>
-      <TableContainer component={Paper}>
+      <TableContainer style={{}} component={Paper}>
         <Table aria-label="market data table" size="small">
           <TableHead>
             <TableRow>
-              <TableCell align="center" colSpan={8}>
-                Call
+              <TableCell style={{backgroundColor: "Aqua"}} align="center" colSpan={10}>
+                Calls
               </TableCell>
-              <TableCell align="center" colSpan={8}>
-                Put
+              <TableCell style={{backgroundColor: "greenyellow"}} align="center" colSpan={10}>
+                Puts
               </TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow style={{backgroundColor: "lemonchiffon"}}>
               <TableCell align="center">OI</TableCell>
               <TableCell align="center">CHNG IN OI</TableCell>
-              <TableCell align="center">TTV</TableCell>
+              <TableCell align="center">VOLUME</TableCell>
               <TableCell align="center">IV</TableCell>
               <TableCell align="center">LTP</TableCell>
               <TableCell align="center">CHNG</TableCell>
-              <TableCell align="center">pCHNG</TableCell>
+              <TableCell align="center">BID QTY</TableCell>
+              <TableCell align="center">BID</TableCell>
+              <TableCell align="center">ASK</TableCell>
+              <TableCell align="center">ASK QTY</TableCell>
               <TableCell align="center">STRIKE</TableCell>
+              <TableCell align="center">BID QTY</TableCell>
+              <TableCell align="center">BID</TableCell>
+              <TableCell align="center">ASK</TableCell>
+              <TableCell align="center">ASK QTY</TableCell>
               <TableCell align="center">CHNG</TableCell>
-              <TableCell align="center">pCHNG</TableCell>
               <TableCell align="center">LTP</TableCell>
               <TableCell align="center">IV</TableCell>
-              <TableCell align="center">TTV</TableCell>
+              <TableCell align="center">VOLUME</TableCell>
               <TableCell align="center">CHNG IN OI</TableCell>
               <TableCell align="center">OI</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody style={{backgroundColor: "ivory"}}>
             {tableData.map((row, index) => (
               <TableRow key={index}>
               <TableCell align="center">{row.oi ? row.oi.toString() : "-"}</TableCell>
