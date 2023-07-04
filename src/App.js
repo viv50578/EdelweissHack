@@ -1,48 +1,109 @@
-import React from 'react';
-import MarketData from './MarketData';
-
-const data = [
-  {
-  packetLength: 124,
-  tradingSymbol: 'MAINIDX28DEC2319000PE',
-  sequenceNumber: 2838n,
-  timestamp: 1688403837130n,
-  lastTradedPrice: 58085n,
-  lastTradedQuantity: 50n,
-  volume: 50n,
-  bidPrice: 57115n,
-  bidQuantity: 100n,
-  askPrice: 58060n,
-  askQuantity: 50n,
-  openInterest: 669300n,
-  previousClosePrice: 7300n,
-  previousOpenInterest: 1550n
-},
-{
-  packetLength: 124,
-  tradingSymbol: 'ALLBANKS27JUL2337000PE',
-  sequenceNumber: 2840n,
-  timestamp: 1688403837133n,
-  lastTradedPrice: 1095n,
-  lastTradedQuantity: 0n,
-  volume: 0n,
-  bidPrice: 855n,
-  bidQuantity: 800n,
-  askPrice: 1200n,
-  askQuantity: 900n,
-  openInterest: 0n,
-  previousClosePrice: 7375n,
-  previousOpenInterest: 1375n
-}
-  
-];
-
-function App() {
-  return (
-    <div className="App">
+import React, { useEffect, useState } from 'react';
+import io from 'socket.io-client';
+import MarketData from "./MarketData";
+ import styled from 'styled-components'
+import { useTable, usePagination } from 'react-table'
+ function App() {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(false);
+   useEffect(() => {
+    const socket = io('http://localhost:5000');
+     socket.on('data', (receivedData) => {
+      try {
+        console.log(receivedData);
+        // Stringify the received data
+        const stringifiedData = JSON.stringify(receivedData);
+        setData(stringifiedData);
+        console.log('datasend',setData)
+        console.log('stringifiedData',stringifiedData)
+        setError(false);
+      } catch (error) {
+        console.log('Error parsing packet:', error);
+        setError(true);
+      }
+    });
+     socket.on('disconnect', () => {
+      console.log('Connection closed');
+      setError(true);
+    });
+     socket.on('error', (error) => {
+      console.log('Error:', error);
+      setError(true);
+    });
+     return () => {
+      socket.disconnect();
+    };
+  }, []);
+   const columns = React.useMemo(
+    () => [
+      {
+        Header: 'Packet Info',
+        columns: [
+          { 
+            Header: 'Packet Length', 
+            accessor: 'packetLength', 
+          }, 
+          { 
+            Header: 'Trading Symbol', 
+            accessor: 'tradingSymbol', 
+          }, 
+          { 
+            Header: 'Sequence Number', 
+            accessor: 'sequenceNumber', 
+          }, 
+          { 
+            Header: 'Timestamp', 
+            accessor: 'timestamp', 
+          }, 
+          { 
+            Header: 'Last Traded Price', 
+            accessor: 'lastTradedPrice', 
+          }, 
+          { 
+            Header: 'Last Traded Quantity', 
+            accessor: 'lastTradedQuantity', 
+          }, 
+          { 
+            Header: 'Volume', 
+            accessor: 'volume', 
+          }, 
+          { 
+            Header: 'Bid Price', 
+            accessor: 'bidPrice', 
+          }, 
+          { 
+            Header: 'Bid Quantity', 
+            accessor: 'bidQuantity', 
+          }, 
+          { 
+            Header: 'Ask Price', 
+            accessor: 'askPrice', 
+          }, 
+          { 
+            Header: 'Ask Quantity', 
+            accessor: 'askQuantity', 
+          }, 
+          { 
+            Header: 'Open Interest', 
+            accessor: 'openInterest', 
+          }, 
+          { 
+            Header: 'Previous Close Price', 
+            accessor: 'previousClosePrice', 
+          }, 
+          { 
+            Header: 'Previous Open Interest', 
+            accessor: 'previousOpenInterest', 
+          }, 
+        ],
+      },
+    ],
+    []
+  )
+   return (
+    <>
       <MarketData values={data} />
-    </div>
+    </>
   );
 }
-
-export default App;
+ export default App;

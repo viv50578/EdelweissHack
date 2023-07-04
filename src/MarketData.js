@@ -151,20 +151,27 @@ const MarketData = (props) => {
               <TableRow key={index}>
               <TableCell align="center">{row.oi ? row.oi.toString() : "-"}</TableCell>
               <TableCell align="center">{row.chngInOI ? row.chngInOI.toString() : "-"}</TableCell>
-              <TableCell align="center">{row.ttv ? row.ttv.toString() : "-"}</TableCell>
+              <TableCell align="center">{row.volume ? row.volume.toString() : "-"}</TableCell>
               <TableCell align="center">{row.iv ? row.iv.toString() : "-"}</TableCell>
               <TableCell align="center">{row.ltp ? row.ltp.toString() : "-"}</TableCell>
               <TableCell align="center">{row.chng ? row.chng.toString() : "-"}</TableCell>
-              <TableCell align="center">{row.pChng ? row.pChng.toString() : "-"}</TableCell>
-              <TableCell align="center">{row.strikePrice ? row.strikePrice.toString() : "-"}</TableCell>
+              <TableCell align="center">{row.bidQty ? row.bidQty.toString() : "-"}</TableCell>
+              <TableCell align="center">{row.bid ? row.bid.toString() : "-"}</TableCell>
+              <TableCell align="center">{row.ask ? row.ask.toString() : "-"}</TableCell>
+              <TableCell align="center">{row.askQty ? row.askQty.toString() : "-"}</TableCell>
+              <TableCell align="center">{row.strike ? row.strike.toString() : "-"}</TableCell>
+              <TableCell align="center">{row.bidQty ? row.bidQty.toString() : "-"}</TableCell>
+              <TableCell align="center">{row.bid ? row.bid.toString() : "-"}</TableCell>
+              <TableCell align="center">{row.ask ? row.ask.toString() : "-"}</TableCell>
+              <TableCell align="center">{row.askQty ? row.askQty.toString() : "-"}</TableCell>
               <TableCell align="center">{row.chng ? row.chng.toString() : "-"}</TableCell>
-              <TableCell align="center">{row.pChng ? row.pChng.toString() : "-"}</TableCell>
               <TableCell align="center">{row.ltp ? row.ltp.toString() : "-"}</TableCell>
               <TableCell align="center">{row.iv ? row.iv.toString() : "-"}</TableCell>
-              <TableCell align="center">{row.ttv ? row.ttv.toString() : "-"}</TableCell>
+              <TableCell align="center">{row.volume ? row.volume.toString() : "-"}</TableCell>
               <TableCell align="center">{row.chngInOI ? row.chngInOI.toString() : "-"}</TableCell>
               <TableCell align="center">{row.oi ? row.oi.toString() : "-"}</TableCell>
             </TableRow>
+            
             ))}
           </TableBody>
         </Table>
